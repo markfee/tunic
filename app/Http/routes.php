@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/folders', function () {
+    return (new \App\Tunic\Folders\FoldersCollection())->get_all_folders()->jsonResponse();
+});
