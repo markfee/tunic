@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Tunic\Models\Folders;
 use Illuminate\Console\Command;
 
 class add_folder extends Command
@@ -11,14 +12,14 @@ class add_folder extends Command
      *
      * @var string
      */
-    protected $signature = 'tunic:add_folder';
+    protected $signature = 'tunic:add_folder {name} {path}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'add a folder to the tunic database';
 
     /**
      * Create a new command instance.
@@ -37,6 +38,10 @@ class add_folder extends Command
      */
     public function handle()
     {
-        print("adding a folder\n");
+        $name = $this->argument("name");
+        $path = $this->argument("path");
+        Folders::create([
+            "name"=>$name,
+            "path"=>$path,]);
     }
 }
