@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use App\Tunic\Models\Folders;
 use Illuminate\Console\Command;
 
-class add_folder extends Command
+class scan_folder extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'tunic:add_folder {name} {path} {max_x=null} {max_y=null}';
+    protected $signature = 'tunic:scan_folder {path}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'add a folder to the tunic database';
+    protected $description = 'scan a folder for files to add to the tunic database';
 
     /**
      * Create a new command instance.
@@ -38,18 +38,10 @@ class add_folder extends Command
      */
     public function handle()
     {
-        $name   = $this->argument("name");
-        $path   = $this->argument("path");
-        $max_x  = $this->argument("max_x");
-        $max_y  = $this->argument("max_y");
+        $path   = trim($this->argument("path"));
 
-        Folders::create(
-            [
-                "name"  =>  $name,
-                "path"  =>  $path,
-                "max_x" =>  $max_x,
-                "max_y" =>  $max_y,
-            ]
-        );
+        $folder = Folders::where("path", $path)->first();
+        dd($folder);
+
     }
 }

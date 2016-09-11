@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\add_folder::class,
+        Commands\scan_folder::class,
     ];
 
     /**
