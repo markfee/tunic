@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\AddPhoto;
 use App\Tunic\Models\Folders;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
@@ -49,7 +51,12 @@ class scan_folder extends Command
 
         $filesystem = new Filesystem();
         foreach($filesystem->allFiles($folder->path) as $file ) {
-            print "{$file} - " . $filesystem->mimeType($file) ."\n";
+//            print "{$file->getRealPath()} - " . $filesystem->mimeType($file) ."\n";
+            $job = (new AddPhoto($file->getRealPath()))
+//                ->delay(Carbon::now()->addSeconds(10))
+//                ->onQueue('jobs')
+            ;
+            dispatch($job);
         }
     }
 }
