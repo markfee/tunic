@@ -16,6 +16,8 @@ class CreateFoldersTable extends Migration
             $table->increments("id");
             $table->string('name')->unique();
             $table->string('path')->unique();
+            $table->integer('max_x')->nullable();
+            $table->integer('max_y')->nullable();
             $table->timestamps();
         });
     }
