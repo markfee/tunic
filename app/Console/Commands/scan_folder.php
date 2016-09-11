@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\Tunic\Models\Folders;
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 
 class scan_folder extends Command
 {
@@ -41,7 +43,13 @@ class scan_folder extends Command
         $path   = trim($this->argument("path"));
 
         $folder = Folders::where("path", $path)->first();
-        dd($folder);
+        if (empty($folder)) {
+            print "path not found in database - please call add_folder first\n";
+        }
 
+        $filesystem = new Filesystem();
+        foreach($filesystem->allFiles($folder->path) as $file ) {
+            print "{$file} - " . $filesystem->mimeType($file) ."\n";
+        }
     }
 }
